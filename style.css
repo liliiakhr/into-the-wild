@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+}
+
+.game-page{
+    display: flex;
+    justify-content: center;
+}
+
+.canvas-wrapper{
+    display: relative;
+    margin-top: 100px;
+}
+
+video {
+    position: fixed;
+    z-index: -1;
+    object-fit: cover;
+    bottom: auto;
+    top: 0;
+    filter: blur(3px);
+  
+    min-width: 100%;
+    min-height: 80%;
+  }
