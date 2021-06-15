@@ -109,6 +109,7 @@ function drawTimer(){
 
 function initializeGameState(){
     isGameOver = false;
+    hasWon = false;
     gamePage.style.display = 'flex';   
     fgList = [{x:1000, y: canvas.height - 90}];
     speed = 4;
@@ -134,16 +135,23 @@ function gameOver(){
     if(counterID){
         clearInterval(counterID);
     };
+    setTimeout(() => {
+        gamePage.style.display = 'none';
+        gameoverPage.style.display = 'flex';
+        scoreElement.innerHTML = score;
+    }, 700);
 }
 
 function winning(){
-    if (score == 3){
-        cancelAnimationFrame(intervalId);
+    if (score == 2){
+        // cancelAnimationFrame(intervalId);
         setTimeout(() => {
             gamePage.style.display = 'none';
+            gameoverPage.style.display = 'none';
             winningPage.style.display = 'flex';
-            scoreElement.innerHTML = score;
+            winScoreElement.innerHTML = score;
         }, 700);
+        hasWon = true;
     }
 }
 
@@ -157,15 +165,9 @@ function draw(){
     drawScore();
     
 
-    if (isGameOver) {
+    if (isGameOver || hasWon) {
         cancelAnimationFrame(intervalId);
         console.log("game over")     
-        setTimeout(() => {
-            gamePage.style.display = 'none';
-            gameoverPage.style.display = 'flex';
-            scoreElement.innerHTML = score;
-        }, 700);
-        
     } 
     else {
         intervalId = requestAnimationFrame(draw);

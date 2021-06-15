@@ -9,7 +9,8 @@ let gamePage = document.querySelector('.game-page');
 let startPage = document.querySelector('.start-page');
 let gameoverPage = document.querySelector('.gameover-page');
 let winningPage = document.querySelector('.winning-page');
-let scoreElement = document.querySelector('.score')
+let scoreElement = document.querySelector('.score');
+let winScoreElement = document.querySelector('.score-win')
 
 
 // let video = document.querySelector("video")
@@ -32,6 +33,7 @@ fire.src = '/images/fire.png';
                    
 // Variables
 let isGameOver = false;
+let hasWon = false;
 let hasBeenReleased = true;
 let counterID = undefined;
 let arrowUp = false, arrowDown = false;
