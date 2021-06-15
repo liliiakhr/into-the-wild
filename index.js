@@ -1,52 +1,3 @@
-let canvas = document.querySelector('#myCanvas');
-let ctx = canvas.getContext('2d');
-canvas.style.border = '2px solid black';
-
-let startButton = document.querySelector(".start");
-let playAgainButton = document.querySelector(".play-again");
-
-let gamePage = document.querySelector('.game-page');
-let startPage = document.querySelector('.start-page');
-let gameoverPage = document.querySelector('.gameover-page');
-let winningPage = document.querySelector('.winning-page')
-
-
-// let video = document.querySelector("video")
-// video.playbackRate = 0.3
-
-let bg = new Image(); 
-bg.src = 'images/background.jpg';
-
-let fg = new Image();
-fg.src = '/images/foreground.jpg';
-
-let girl = new Image();
-girl.src = '/images/girl.png';
-
-let bottle = new Image();
-bottle.src = '/images/bottle.png';
-
-let fire = new Image();
-fire.src = '/images/fire.png';
-                   
-// Variables
-let isGameOver = false;
-let hasBeenReleased = true;
-let arrowUp = false, arrowDown = false;
-
-let fgList = [{x:1000, y: canvas.height - 90}];
-let speed = 4;
-let obstacles = [
-    {x : 700, y: 580},
-    {x : 1100, y: 560} 
-];
-let obstaclesW = 50, obstaclesH = 75;
-let girlX = 150, girlY = 480, girlH = 140, girlW = 75;
-let gravity = true;
-
-   
-
-
 function addForeground (){
     ctx.drawImage( fg , 0, canvas.height - 90);
     for (let i = 0; i < fgList.length; i++) {
@@ -83,13 +34,13 @@ function addObstacles(){
                 y: Math.floor(Math.random() * (600-450 + 1) + 450)
             }
         }
-        // collision
-        if (girlX + girlW > obstacles[i].x && 
+        // collision (substracting 10px from character's height and width to account for images' invisible space )
+        if (girlX + girlW -10  > obstacles[i].x && 
             girlX < obstacles[i].x + 50 &&
-            girlY + girlH > obstacles[i].y &&
+            girlY + girlH -10 > obstacles[i].y &&
             girlY < obstacles[i].y + 75
             ){
-            isGameOver = true
+            gameOver()
         }
     }
     }       
@@ -97,7 +48,55 @@ function addObstacles(){
     
          
 function addWater(){
-    ctx.drawImage( bottle , 700, 550, 50, 70);
+    // ctx.drawImage( bottle , 700, 550, 50, 70);
+}
+
+function score(){
+
+}
+
+function addTimer(){
+    counterID = setInterval(() => {
+        counter += 1;    
+        console.log(counter) 
+    }, 1000);
+}
+
+function drawTimer(){
+    let minutes = Math.floor(counter / 60)
+    let seconds =  Math.floor(counter % 60)
+    let editedSeconds = seconds < 10 ? "0" + seconds : seconds
+    ctx.font = '40px serif'
+    ctx.fillText(`${minutes}:${editedSeconds}`, 50, 50)
+
+}
+
+function initializeGameState(){
+    isGameOver = false;
+    gamePage.style.display = 'flex';   
+    fgList = [{x:1000, y: canvas.height - 90}];
+    speed = 4;
+    counter = 0;
+    obstacles = [
+        {x : 700, y: 580},
+        {x : 1100, y: 560} 
+    ];
+    obstaclesW = 50, obstaclesH = 75;
+    girlX = 150, girlY = 480, girlH =140, girlW = 75;
+    addTimer();
+} 
+
+function restart(){
+    initializeGameState()
+    gameoverPage.style.display = 'none';   
+    draw()
+}
+
+function gameOver(){
+    isGameOver = true
+    if(counterID){
+        clearInterval(counterID);
+    }
 }
 
 function draw(){
@@ -106,23 +105,29 @@ function draw(){
     addCharecter();
     addObstacles();
     addWater();
-    // checkCollision();
+    drawTimer();
+    
 
     if (isGameOver) {
-        cancelAnimationFrame(intervalId)
-        console.log("game over")
-        startPage.style.display = 'none';
-        gamePage.style.display = 'none';
-        gameoverPage.style.display = 'flex';
-    }
+        cancelAnimationFrame(intervalId);
+        console.log("game over")     
+        setTimeout(() => {
+            gamePage.style.display = 'none';
+            gameoverPage.style.display = 'flex'
+        }, 700);
+        
+    } 
     else {
         intervalId = requestAnimationFrame(draw);
     } 
 }
 
 
+// Event listeners
 window.addEventListener('load', () => { 
-    draw()
+    initializeGameState();
+    draw();
+    
 
     document.addEventListener('keydown', (event) => {
         if (event.code === "Space" && hasBeenReleased){
@@ -153,9 +158,7 @@ window.addEventListener('load', () => {
     })
 
     playAgainButton.addEventListener('click', () => {
-        gamePage.style.display = 'flex';    
-        gameoverPage.style.display = 'none'; 
-        winningPage.style.display = 'none';
+        restart()
         
     })
         
