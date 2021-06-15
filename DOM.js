@@ -8,7 +8,8 @@ let playAgainButton = document.querySelector(".play-again");
 let gamePage = document.querySelector('.game-page');
 let startPage = document.querySelector('.start-page');
 let gameoverPage = document.querySelector('.gameover-page');
-let winningPage = document.querySelector('.winning-page')
+let winningPage = document.querySelector('.winning-page');
+let scoreElement = document.querySelector('.score')
 
 
 // let video = document.querySelector("video")
@@ -34,7 +35,8 @@ let isGameOver = false;
 let hasBeenReleased = true;
 let counterID = undefined;
 let arrowUp = false, arrowDown = false;
-let counter = 0
+let counter = 0;
+let score = 0;
 
 let fgList = [{x:1000, y: canvas.height - 90}];
 let speed = 4;
@@ -43,7 +45,10 @@ let obstacles = [
     {x : 1100, y: 560} 
 ];
 let obstaclesW = 50, obstaclesH = 75;
-let girlX = 150, girlY = 480, girlH = 140, girlW = 75;
+
+let waterList = [{x : 1400, y : 600}]
+
+let girlX = 150, girlY = 480, girlH = 140, girlW = 75;  
 
 
    

@@ -1,5 +1,15 @@
 function addForeground (){
+
+    // ctx.save();
+    // ctx.translate(0, canvas.height - 90);
+    // ctx.rotate(45);
+    // ctx.translate(-500,-(canvas.height - 90)/2);
+    // ctx.drawImage( fg , 0, canvas.height - 90);
+    // ctx.restore();
+
     ctx.drawImage( fg , 0, canvas.height - 90);
+
+
     for (let i = 0; i < fgList.length; i++) {
         ctx.drawImage(fg, fgList[i].x, fgList[i].y);
         fgList[i].x = fgList[i].x - speed;
@@ -43,22 +53,48 @@ function addObstacles(){
             gameOver()
         }
     }
-    }       
-
-    
-         
+}       
+       
 function addWater(){
-    // ctx.drawImage( bottle , 700, 550, 50, 70);
+    if (waterList.length == 0 ) {
+        waterList[0] = { x : Math.floor(Math.random() * (1400-800 + 1) + 800) , y : Math.floor(Math.random() * (720-350 + 1) + 350)}
+    }
+
+    for (let i=0; i< waterList.length; i++){
+        ctx.drawImage( bottle , waterList[i].x, waterList[i].y, 45, 60);
+        waterList[i].x -= speed
+
+        if (waterList[i].x + 500 < 0){
+            waterList[i] = {
+                x: Math.floor(Math.random() * (1800-800 + 1) + 800),
+                y: Math.floor(Math.random() * (720-350 + 1) + 350)
+            }
+        }    
+
+        // Scoring
+        if (girlX + girlW -10  > waterList[i].x && 
+            girlX < waterList[i].x + 45 &&
+            girlY + girlH -10 > waterList[i].y &&
+            girlY < waterList[i].y + 60
+            ){
+                waterList.splice(i, 1)
+                score += 1
+                console.log(score)
+            }
+
+    }
 }
 
-function score(){
-
+function drawScore(){
+    ctx.font = '40px serif';
+    ctx.fillText(`${score}`, 900, 50);
+    winning();
 }
+
 
 function addTimer(){
     counterID = setInterval(() => {
         counter += 1;    
-        console.log(counter) 
     }, 1000);
 }
 
@@ -77,6 +113,7 @@ function initializeGameState(){
     fgList = [{x:1000, y: canvas.height - 90}];
     speed = 4;
     counter = 0;
+    score = 0;
     obstacles = [
         {x : 700, y: 580},
         {x : 1100, y: 560} 
@@ -93,9 +130,20 @@ function restart(){
 }
 
 function gameOver(){
-    isGameOver = true
+    isGameOver = true;
     if(counterID){
         clearInterval(counterID);
+    };
+}
+
+function winning(){
+    if (score == 3){
+        cancelAnimationFrame(intervalId);
+        setTimeout(() => {
+            gamePage.style.display = 'none';
+            winningPage.style.display = 'flex';
+            scoreElement.innerHTML = score;
+        }, 700);
     }
 }
 
@@ -106,6 +154,7 @@ function draw(){
     addObstacles();
     addWater();
     drawTimer();
+    drawScore();
     
 
     if (isGameOver) {
@@ -113,7 +162,8 @@ function draw(){
         console.log("game over")     
         setTimeout(() => {
             gamePage.style.display = 'none';
-            gameoverPage.style.display = 'flex'
+            gameoverPage.style.display = 'flex';
+            scoreElement.innerHTML = score;
         }, 700);
         
     } 
