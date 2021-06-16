@@ -9,7 +9,6 @@ function addForeground (){
 
     ctx.drawImage( fg , 0, canvas.height - 90);
 
-
     for (let i = 0; i < fgList.length; i++) {
         ctx.drawImage(fg, fgList[i].x, fgList[i].y);
         fgList[i].x = fgList[i].x - speed;
@@ -20,17 +19,7 @@ function addForeground (){
     }
 }
 
-function addCharecter(){
-    ctx.drawImage( girl, girlX, girlY, girlW, girlH);
 
-    if (arrowDown && girlY + girlH < canvas.height){
-        girlY += 3;
-    }
-    if (arrowUp && girlY > 400){
-        girlY -= 3;
-    }
-
-}
           
 function addObstacles(){
 
@@ -44,11 +33,11 @@ function addObstacles(){
                 y: Math.floor(Math.random() * (600-450 + 1) + 450)
             }
         }
-        // collision (substracting 10px from character's height and width to account for images' invisible space )
-        if (girlX + girlW -10  > obstacles[i].x && 
-            girlX < obstacles[i].x + 50 &&
-            girlY + girlH -10 > obstacles[i].y &&
-            girlY < obstacles[i].y + 75
+        // collision (substracting n px from character's height and width to account for images' invisible space )
+        if (xPos + (frameWidth * scale) - 30  > obstacles[i].x && 
+            xPos < obstacles[i].x + 30 &&
+            yPos + frameHeight * scale - 30 > obstacles[i].y &&
+            yPos < obstacles[i].y + 55
             ){
                 ouchSound.play()
                 ouchSound.volume = 0.2;
@@ -74,10 +63,10 @@ function addWater(){
         }    
 
         // Scoring
-        if (girlX + girlW -10  > waterList[i].x && 
-            girlX < waterList[i].x + 45 &&
-            girlY + girlH -10 > waterList[i].y &&
-            girlY < waterList[i].y + 60
+        if (xPos + frameWidth * scale - 20  > waterList[i].x && 
+            xPos < waterList[i].x + 45 &&
+            yPos + frameHeight * scale - 20 > waterList[i].y &&
+            yPos < waterList[i].y + 60
             ){
                 waterList.splice(i, 1)
                 score += 1
@@ -126,10 +115,9 @@ function initializeGameState(){
         {x : 1100, y: 560} 
     ];
     obstaclesW = 50, obstaclesH = 75;
-    girlX = 150, girlY = 480, girlH =140, girlW = 75;
+    xPos = 150, yPos = 480, frameWidth = 166, frameHeight = 225;
+    rocks = [{x : 1050, y : 450}]
     addTimer();
-
-
 
 } 
 
@@ -158,7 +146,9 @@ function gameOver(){
 
 function winning(){
     if (score == 2){
-        // cancelAnimationFrame(intervalId);
+        if(counterID){
+            clearInterval(counterID);
+        };
         setTimeout(() => {
             gamePage.style.display = 'none';
             gameoverPage.style.display = 'none';
@@ -182,14 +172,59 @@ function manageSound(){
     }
 }
 
+let frameWidth = 166, frameHeight = 225, xPos = 150, yPos = 480, scale = 0.6, fps = 69;
+let secondsToUpdate = 1 * fps, count = 0, frameIndex = 0;
+
+ 
+
+
+function animateCharacter(){
+    ctx.drawImage(
+        character,
+        frameIndex * frameWidth,
+        0, 
+        frameWidth, 
+        frameHeight,
+        xPos, 
+        yPos,
+        frameWidth * scale, 
+        frameHeight * scale
+        );
+
+        count ++;
+        if (count > 5) {
+            frameIndex ++;
+            count = 0;
+        }
+        if (frameIndex > 5){
+            frameIndex = 0;
+        }
+        // Let character move up and down
+        if (arrowDown && yPos + girlH < canvas.height){
+            yPos += 3;
+        }
+        if (arrowUp && yPos > 400){
+            yPos -= 3;
+        }
+};
+
+// function addCharecter(){
+//     ctx.drawImage( girl, girlX, yPos, girlW, girlH);
+
+    
+
+// }
+
 function draw(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.drawImage(bg, 0, 0);
     addForeground();
-    addCharecter();
+    // addCharecter();
     addObstacles();
     addWater();
     drawTimer();
     drawScore();
+    animateCharacter();
 
     if (isGameOver || hasWon) {
         cancelAnimationFrame(intervalId);
@@ -210,10 +245,10 @@ window.addEventListener('load', () => {
     document.addEventListener('keydown', (event) => {
         if (event.code === "Space" && hasBeenReleased){
             hasBeenReleased = false;
-            girlY -= 110;
+            yPos -= 110;
             setTimeout(() => {
                 spaceDown = false;
-                girlY += 110;
+                yPos += 110;
             }, 600); 
         };
         if (event.code === "ArrowUp"){
@@ -231,9 +266,9 @@ window.addEventListener('load', () => {
     })
 
     startButton.addEventListener('click', () => {
-        manageSound();
         initializeGameState();
         draw();
+        manageSound();
     })
 
     playAgainButton.addEventListener('click', () => {

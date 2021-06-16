@@ -19,17 +19,15 @@ let mainAudio = new Audio('recources/main-theme.mp3')
 let ouchSound = new Audio('recources/ouch.mp3');
 let waterSound = new Audio('recources/water.wav');
 
-// let video = document.querySelector("video")
-// video.playbackRate = 0.3
-
+// Images
 let bg = new Image(); 
 bg.src = 'recources/background.jpg';
 
 let fg = new Image();
 fg.src = 'recources/foreground.jpg';
 
-let girl = new Image();
-girl.src = 'recources/girl.png';
+// let girl = new Image();
+// girl.src = 'recources/girl.png';
 
 let bottle = new Image();
 bottle.src = 'recources/bottle.png';
@@ -37,6 +35,11 @@ bottle.src = 'recources/bottle.png';
 let fire = new Image();
 fire.src = 'recources/fire.png';
 
+let rock = new Image();
+rock.src = 'recources/rock.png'
+
+let character = new Image();
+character.src = 'recources/character.png'
 
                    
 // Variables
@@ -58,7 +61,7 @@ let obstaclesW = 50, obstaclesH = 75;
 
 let waterList = [{x : 1400, y : 600}]
 
-let girlX = 140, girlY = 480, girlH = 140, girlW = 75;  
+// let girlX = 140, girlY = 480, girlH = 140, girlW = 75;  
 
-
+let rocks = [{x : 1050, y : 450}]
    

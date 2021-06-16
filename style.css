@@ -13,8 +13,8 @@ body{
 
 .sound-button{
     position: absolute;
-    top: 810px;
-    left: 1000px;
+    top: 50px;
+    left: 900px;
     width: 85px;
     height: 40px;
     background-color: rgb(70, 93, 128);
