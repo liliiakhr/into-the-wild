@@ -26,16 +26,16 @@ let bg = new Image();
 bg.src = 'recources/background.jpg';
 
 let fg = new Image();
-fg.src = '/recources/foreground.jpg';
+fg.src = 'recources/foreground.jpg';
 
 let girl = new Image();
-girl.src = '/recources/girl.png';
+girl.src = 'recources/girl.png';
 
 let bottle = new Image();
-bottle.src = '/recources/bottle.png';
+bottle.src = 'recources/bottle.png';
 
 let fire = new Image();
-fire.src = '/recources/fire.png';
+fire.src = 'recources/fire.png';
 
 
                    
