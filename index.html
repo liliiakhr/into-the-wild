@@ -5,15 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="ICON" href="images/favicon.ico" />
+    <link rel="ICON" href="recources/favicon.ico" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&family=Montserrat&family=Roboto+Slab:wght@500&display=swap" rel="stylesheet"></head>
 <body>
     <div class="video-wrapper">
         <!-- <div style="width:100%;height:0;padding-bottom:70%;position:relative;"><iframe src="https://giphy.com/embed/uf3jumi0zzUv6" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/forest-mist-uf3jumi0zzUv6">via GIPHY</a></p> -->
-        
-        <!-- <video src="images/video.mp4" autoplay muted loop class="background-video"></video> -->
+        <img id="bg-image" src="recources/main.jpg" alt="mountains">
+        <!-- <video src="recources/video.mp4" autoplay muted loop class="background-video"></video> -->
     </div>
+    <button class="sound-button on"> Sound ON </button>
 
     <section class="start-page">
         <div class="start-box">
@@ -62,10 +63,13 @@
                 Your score is: <span class="score-win"></span> <br>
                 Do you want to play again?
             </p>
-            <button class="play-again">Play again</button>
+            <button class="play-again-win">Play again</button>
         </div>
-
     </section>
+    <p class="footer">
+        Made by <a target="_blank" href="https://github.com/liliiakhr">Lily</a>
+    </p>
+
 
     <script src="DOM.js"></script>
     <script src="index.js"></script>

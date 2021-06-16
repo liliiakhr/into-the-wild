@@ -50,8 +50,10 @@ function addObstacles(){
             girlY + girlH -10 > obstacles[i].y &&
             girlY < obstacles[i].y + 75
             ){
-            gameOver()
-        }
+                ouchSound.play()
+                ouchSound.volume = 0.2;
+                gameOver()
+            }
     }
 }       
        
@@ -79,6 +81,8 @@ function addWater(){
             ){
                 waterList.splice(i, 1)
                 score += 1
+                waterSound.play()
+                waterSound.volume = 0.1;
                 console.log(score)
             }
 
@@ -108,8 +112,10 @@ function drawTimer(){
 }
 
 function initializeGameState(){
-    isGameOver = false;
-    hasWon = false;
+    gameoverPage.style.display = 'none';   
+    startPage.style.display = 'none';
+    gamePage.style.display = 'flex';
+    winningPage.style.display = 'none';
     gamePage.style.display = 'flex';   
     fgList = [{x:1000, y: canvas.height - 90}];
     speed = 4;
@@ -122,12 +128,18 @@ function initializeGameState(){
     obstaclesW = 50, obstaclesH = 75;
     girlX = 150, girlY = 480, girlH =140, girlW = 75;
     addTimer();
+
+
+
 } 
 
 function restart(){
-    initializeGameState()
-    gameoverPage.style.display = 'none';   
-    draw()
+    initializeGameState();
+    isGameOver = false;
+    hasWon = false;
+    draw();
+    // if (startPage.style.display == 'none'){}
+
 }
 
 function gameOver(){
@@ -138,6 +150,8 @@ function gameOver(){
     setTimeout(() => {
         gamePage.style.display = 'none';
         gameoverPage.style.display = 'flex';
+        startPage.style.display = 'none';
+        winningPage.style.display = 'none';
         scoreElement.innerHTML = score;
     }, 700);
 }
@@ -148,10 +162,23 @@ function winning(){
         setTimeout(() => {
             gamePage.style.display = 'none';
             gameoverPage.style.display = 'none';
+            startPage.style.display = 'none';
             winningPage.style.display = 'flex';
             winScoreElement.innerHTML = score;
-        }, 700);
+        }, 1200);
         hasWon = true;
+    }
+}
+
+
+
+function manageSound(){
+    if (soundButton.classList.contains("on")){
+        mainAudio.play();
+        mainAudio.volume = 0.1;
+        mainAudio.loop = true;
+    } else if (soundButton.classList.contains("off")){
+        mainAudio.pause();
     }
 }
 
@@ -163,7 +190,6 @@ function draw(){
     addWater();
     drawTimer();
     drawScore();
-    
 
     if (isGameOver || hasWon) {
         cancelAnimationFrame(intervalId);
@@ -176,11 +202,10 @@ function draw(){
 
 
 // Event listeners
-window.addEventListener('load', () => { 
-    initializeGameState();
-    draw();
-    
-
+window.addEventListener('load', () => {   
+    startPage.style.display = 'flex';
+    gamePage.style.display = 'none';
+    manageSound();
     document.addEventListener('keydown', (event) => {
         if (event.code === "Space" && hasBeenReleased){
             hasBeenReleased = false;
@@ -188,7 +213,7 @@ window.addEventListener('load', () => {
             setTimeout(() => {
                 spaceDown = false;
                 girlY += 110;
-            }, 700); 
+            }, 600); 
         };
         if (event.code === "ArrowUp"){
             arrowUp = true;
@@ -205,14 +230,32 @@ window.addEventListener('load', () => {
     })
 
     startButton.addEventListener('click', () => {
-        startPage.style.display = 'none';
-        gamePage.style.display = 'flex';
+        initializeGameState();
+        draw();
     })
 
     playAgainButton.addEventListener('click', () => {
         restart()
         
     })
+
+    playAgainWinButton.addEventListener('click', () => {
+        restart()
         
+    })
+
+    soundButton.addEventListener('click', () => {
         
+        if (soundButton.classList.contains("on")){
+            soundButton.classList.remove("on");
+            soundButton.classList.add("off");
+            soundButton.innerHTML = "Sound OFF";
+        }else if (soundButton.classList.contains("off")){
+            soundButton.classList.remove("off");
+            soundButton.classList.add("on");
+            soundButton.innerHTML = "Sound ON";
+        };
+        manageSound();
+    })
+
 });
