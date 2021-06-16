@@ -205,7 +205,9 @@ function draw(){
 window.addEventListener('load', () => {   
     startPage.style.display = 'flex';
     gamePage.style.display = 'none';
-    manageSound();
+    setTimeout(() => {
+        manageSound();
+    }, 1000);
     document.addEventListener('keydown', (event) => {
         if (event.code === "Space" && hasBeenReleased){
             hasBeenReleased = false;
