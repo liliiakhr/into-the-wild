@@ -2,7 +2,18 @@
 
 ### Description
 
-Into the Wild is a game where a player assumes a role of a hiker. He has to avoid the obstacles & collect water bottles to avoid being thirsty. User wins if we can manage to gather 7 points. 
+Get ready to go on adventure Into the Wild!
+<br>
+Use <b>SPACE</b> to jump, <b>arrows ↑ and ↓</b>  to move up and down.
+<br> Avoid bonfires! 🔥 <br> 
+Collect water bottles to help your character with thirst.💧 
+<br> <br> 
+In the <b> easy level </b>you will be hiking <b> Mont Blanc </b>. 
+To reach the summit, you will need at least <i> 7 bottles </i>of water.<br>
+In the <b>hard level</b> you will be hiking <b> Mount Kilimanjaro </b>. 
+You will need to go much faster and to gather at least <i> 11 bottles of water </i>. 
+
+
 
 
 ### MVP
