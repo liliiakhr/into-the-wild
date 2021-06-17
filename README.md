@@ -2,7 +2,7 @@
 
 ### Description
 
-Into the Wild is a game where a player assumes a role of a hiker. He has to avoid the obstacles & collect water bottles to avoid being thirsty. User wins if we can manage to stay in the game for <placeholder> seconds. 
+Into the Wild is a game where a player assumes a role of a hiker. He has to avoid the obstacles & collect water bottles to avoid being thirsty. User wins if we can manage to gather 7 points. 
 
 
 ### MVP
@@ -11,7 +11,7 @@ Into the Wild is a game where a player assumes a role of a hiker. He has to avoi
 - game has a character, who is placed on the bottom, and is able to jump;
 - game has obstacles (fire);
 - game has a counter for bonus points( water bottles);
-- game is won if player reaches a score of 11;
+- game is won if player reaches a score of 7;
 - game is lost if a charecter collides with one of the obstacles;
 
 
@@ -23,14 +23,15 @@ Into the Wild is a game where a player assumes a role of a hiker. He has to avoi
 - Times to show time elapsed since the beginning of the game;
 
 
-
 ### Data structure
 
 ```
-addForegroun();
-addCharecter();
+addForeground();
+animateCharecter();
 addObstacles();
 addWater();
+checkForCollision();
+calculateScore();
 drawScore();
 addTimer();
 drawTimer()
@@ -45,5 +46,5 @@ draw();
 #### Additional Links
 ###### [Trello](https://trello.com/b/cQdXATsQ/into-the-wild)
 ###### [Fireframe](https://drive.google.com/file/d/1fRSRdoKKjzYFplc6qOqvFE9cKWU3Z2Sn/view?usp=sharing)
-###### Slides
+###### [Slides](https://docs.google.com/presentation/d/1XfAitmROao8lG_6SkYxrJ5oSOFk-AiFwbsWVIkCR59c/edit?usp=sharing)
 

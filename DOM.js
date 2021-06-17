@@ -21,26 +21,26 @@ let waterSound = new Audio('recources/water.wav');
 
 // Images
 let bg = new Image(); 
-bg.src = 'recources/background.jpg';
+bg.src = 'recources/images/background.jpg';
 
 let fg = new Image();
-fg.src = 'recources/foreground.jpg';
-
-// let girl = new Image();
-// girl.src = 'recources/girl.png';
+fg.src = 'recources/images/foreground.jpg';
 
 let bottle = new Image();
-bottle.src = 'recources/bottle.png';
+bottle.src = 'recources/images/bottle.png';
 
 let fire = new Image();
-fire.src = 'recources/fire.png';
+fire.src = 'recources/images/fire.png';
 
 let rock = new Image();
-rock.src = 'recources/rock.png'
+rock.src = 'recources/images/rock.png'
 
 let character = new Image();
-character.src = 'recources/character.png'
+character.src = 'recources/images/character.png'
 
+// Animated character
+let frameWidth = 166, frameHeight = 225, xPos = 150, yPos = 480, scale = 0.6, fps = 69;
+let secondsToUpdate = 1 * fps, count = 0, frameIndex = 0;
                    
 // Variables
 let isGameOver = false;
