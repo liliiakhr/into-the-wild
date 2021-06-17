@@ -179,8 +179,6 @@ function winning(){
     }
 }
 
-
-
 function manageSound(){
     if (soundButton.classList.contains("on")){
         mainAudio.play();
