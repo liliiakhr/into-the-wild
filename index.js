@@ -32,7 +32,7 @@ function addObstacles(){
 // collision (substracting n px from character's height and width to account for images' invisible space )
 function checkForCollision() {
     for (let i=0; i<obstacles.length; i++){
-        if (xPos + (frameWidth * scale) - 30  > obstacles[i].x && 
+        if (xPos + (frameWidth * scale) - 40  > obstacles[i].x && 
             xPos < obstacles[i].x + 30 &&
             yPos + frameHeight * scale - 30 > obstacles[i].y &&
             yPos < obstacles[i].y + 55
@@ -112,9 +112,10 @@ function initializeGameState(){
     winningPage.style.display = 'none';
     gamePage.style.display = 'flex';   
     fgList = [{x:1000, y: canvas.height - 90}];
-    speed = 4;
+    // speed = 4;
     counter = 0;
     score = 0;
+    // easyLevel = false, hardLevel = false;
     obstacles = [
         {x : 700, y: 580},
         {x : 1100, y: 560} 
@@ -151,7 +152,19 @@ function gameOver(){
 
 // Called to check if the score has reached winning score
 function winning(){
-    if (score == 7){
+    if (easyLevel && score == 7){
+        if(counterID){
+            clearInterval(counterID);
+        };
+        setTimeout(() => {
+            gamePage.style.display = 'none';
+            gameoverPage.style.display = 'none';
+            startPage.style.display = 'none';
+            winningPage.style.display = 'flex';
+            winScoreElement.innerHTML = score;
+        }, 1200);
+        hasWon = true;
+    }else if(hardLevel && score == 11){
         if(counterID){
             clearInterval(counterID);
         };
@@ -193,7 +206,7 @@ function animateCharacter(){
         );
 
         count ++;
-        if (count > 55) {
+        if (count > 5) {
             frameIndex ++;
             count = 0;
         }
@@ -209,11 +222,27 @@ function animateCharacter(){
         }
 };
 
+function easyLevelFunc() {
+    easyLevel = true;
+    speed = 4;
+};
+
+function hardLevelFunc() {
+    hardLevel = true;
+    console.log("hard");
+    speed = 6;
+};
 
 // Main function to animate the page
 function draw(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.drawImage(bg, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (hardLevel){
+        ctx.drawImage(bg2, 0, 0);
+    }
+    if (easyLevel){
+        ctx.drawImage(bg, 0, 0);
+    }
+    // ctx.drawImage(bg2, 0, 0);
     addForeground();
     // addCharecter();
     addObstacles();
@@ -242,10 +271,18 @@ window.addEventListener('load', () => {
         if (event.code === "Space" && hasBeenReleased){
             hasBeenReleased = false;
             yPos -= 110;
-            setTimeout(() => {
-                spaceDown = false;
-                yPos += 110;
-            }, 600); 
+            if (easyLevel){
+                setTimeout(() => {
+                    spaceDown = false;
+                    yPos += 110;
+                }, 600); 
+            }else if (hardLevel){
+                setTimeout(() => {
+                    spaceDown = false;
+                    yPos += 110;
+                }, 400); 
+            }
+
         };
         if (event.code === "ArrowUp"){
             arrowUp = true;
@@ -261,11 +298,24 @@ window.addEventListener('load', () => {
         arrowDown = false; 
     })
 
-    startButton.addEventListener('click', () => {
+    // startButton.addEventListener('click', () => {
+    //     initializeGameState();
+    //     draw();
+    //     manageSound();
+    // })
+    startEasyButton.addEventListener('click', () => {
         initializeGameState();
         draw();
         manageSound();
+        easyLevelFunc();
     })
+    startHardButton.addEventListener('click', () => {
+        initializeGameState();
+        draw();
+        manageSound();
+        hardLevelFunc();
+    })
+
 
     playAgainButton.addEventListener('click', () => {
         restart()

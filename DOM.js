@@ -3,6 +3,8 @@ let ctx = canvas.getContext('2d');
 canvas.style.border = '2px solid black';
 
 let startButton = document.querySelector(".start");
+let startEasyButton = document.querySelector(".easy");
+let startHardButton = document.querySelector(".hard");
 let playAgainButton = document.querySelector(".play-again");
 let playAgainWinButton = document.querySelector(".play-again-win");
 let soundButton = document.querySelector(".sound-button") 
@@ -21,7 +23,10 @@ let waterSound = new Audio('recources/water.wav');
 
 // Images
 let bg = new Image(); 
-bg.src = 'recources/images/background.jpg';
+bg.src = 'recources/images/background1.jpg';
+
+let bg2 = new Image();
+bg2.src = 'recources/images/background2.jpg';
 
 let fg = new Image();
 fg.src = 'recources/images/foreground.jpg';
@@ -43,13 +48,12 @@ let frameWidth = 166, frameHeight = 225, xPos = 150, yPos = 480, scale = 0.6, fp
 let secondsToUpdate = 1 * fps, count = 0, frameIndex = 0;
                    
 // Variables
-let isGameOver = false;
-let hasWon = false;
-let hasBeenReleased = true;
+let isGameOver = false, hasWon = false, hasBeenReleased = true;
 let counterID = undefined;
 let arrowUp = false, arrowDown = false;
-let counter = 0;
-let score = 0;
+let counter = 0, score = 0;
+let easyLevel = false, hardLevel = false;
+
 
 let fgList = [{x:1000, y: canvas.height - 90}];
 let speed = 5;
